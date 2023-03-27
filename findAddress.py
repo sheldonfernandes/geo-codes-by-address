@@ -37,8 +37,9 @@ with open(input) as inputCSV:
                 writer.writerow(row+['x']+['y'])
 
             if row and line_count > 0:
-                params['SingleLine'] = row[0] + ' ' + row[2] + ' ' + row[3];
-                
+                # params['SingleLine'] = row[0] + ' ' + row[2] + ' ' + row[3];
+                params['SingleLine'] = row[11] + ' ' + row[9] + ' ' + row[10];
+
                 # Send the request to the API and get the response
                 response = requests.get(url, params=params)
 
@@ -50,10 +51,10 @@ with open(input) as inputCSV:
                     # Save results to output CSV
                     if data['candidates']:
                         for candidate in data['candidates']:
-                            print(candidate['address'], candidate['location']['x'], candidate['location']['y'])
+                            print(str(line_count) + ' ' + candidate['address'], candidate['location']['x'], candidate['location']['y'])
                             writer.writerow(row+[candidate['location']['x']]+[candidate['location']['y']])
                     else:
-                        print(row[0] + ' *** No geo code found ***')
+                        print(str(line_count) + ' ' + row[0] + ' *** No geo code found ***')
                         writer.writerow(row)
 
                 else:
